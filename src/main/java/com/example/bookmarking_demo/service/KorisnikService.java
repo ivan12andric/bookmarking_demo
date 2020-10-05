@@ -18,4 +18,8 @@ public class KorisnikService {
 		return korisnikRepository.findAll();
 	}
 
+	public Korisnik save(Korisnik korisnik) {
+		return korisnikRepository.save(korisnik);
+	}
+
 }
