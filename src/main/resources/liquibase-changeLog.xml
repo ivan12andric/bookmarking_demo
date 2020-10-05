@@ -24,10 +24,12 @@
 	</changeSet>
 
 	<changeSet id="2" author="auto">
-
 		<addAutoIncrement tableName="korisnik"
 			columnName="id" columnDataType="int" />
-
+	</changeSet>
+	
+	<changeSet id="3" author="auto">
+		<addUniqueConstraint columnNames="korisnicko_ime" tableName="korisnik" />
 	</changeSet>
 
 
