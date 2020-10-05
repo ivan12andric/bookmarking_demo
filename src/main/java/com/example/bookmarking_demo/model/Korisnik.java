@@ -14,11 +14,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class Korisnik implements Serializable {
 
@@ -28,11 +34,14 @@ public class Korisnik implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	@EqualsAndHashCode.Include
-	private Integer id;
+	private Long id;
 
 	@Basic(optional = false)
 	@Column(name = "KORISNICKO_IME")
 	private String korisnickoIme;
+
+	@Basic(optional = false)
+	private String lozinka;
 
 	@Basic(optional = false)
 	private Boolean aktivan;
