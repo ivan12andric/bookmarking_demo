@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.bookmarking_demo.model.Korisnik;
 import com.example.bookmarking_demo.service.KorisnikService;
@@ -18,7 +19,12 @@ public class BookmarkingDemoApplication {
 	@Bean
 	CommandLineRunner initDatabase(KorisnikService korisnikService) {
 		return args -> {
-			korisnikService.save(Korisnik.builder().korisnickoIme("admin").lozinka("admin").aktivan(true).build());
+			korisnikService.save(
+					Korisnik.builder()
+							.korisnickoIme("admin")
+							.lozinka(new BCryptPasswordEncoder().encode("admin"))
+							.aktivan(true)
+							.build());
 		};
 	}
 
