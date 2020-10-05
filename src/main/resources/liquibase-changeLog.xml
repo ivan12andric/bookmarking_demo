@@ -23,6 +23,13 @@
 		</createTable>
 	</changeSet>
 
-	
+	<changeSet id="2" author="auto">
+
+		<addAutoIncrement tableName="korisnik"
+			columnName="id" columnDataType="int" />
+
+	</changeSet>
+
+
 
 </databaseChangeLog>
