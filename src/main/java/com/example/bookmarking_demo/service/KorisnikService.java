@@ -1,5 +1,6 @@
 package com.example.bookmarking_demo.service;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,13 +56,17 @@ public class KorisnikService {
 
 		boolean isNew = korisnik.getId() == null || findById(korisnik.getId()).isEmpty();
 
-		//enkripcija lozinke za novog korisnika
 		if (isNew) {
+
+			if (korisnik.getId() != null) {
+				throw new Exception(MessageFormat.format("Ne postoji korisnik sa jedinstvenim identifikatorom: {0}", korisnik.getId()));
+			}
 
 			if (StringUtils.isBlank(korisnik.getLozinka())) {
 				throw new Exception("Lozinka je obavezna za novog korisnika");
 			}
 
+			//enkripcija lozinke za novog korisnika
 			korisnik.setLozinka(passwordEncoder.encode(korisnik.getLozinka()));
 
 		} else {// lozinka se ne može ažurirati za postojećeg korisnika

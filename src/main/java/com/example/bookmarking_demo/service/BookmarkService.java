@@ -3,6 +3,7 @@ package com.example.bookmarking_demo.service;
 import static com.example.bookmarking_demo.util.AppConstants.BOOKMARK_VRSTA_JAVNI;
 import static com.example.bookmarking_demo.util.AppConstants.BOOKMARK_VRSTA_PRIVATNI;
 
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,10 +53,16 @@ public class BookmarkService {
 			throw new Exception("Nepoznata vrsta bookmark-a");
 		}
 
-		//postavi trenutno prijavljenog korisnika za novi privatni bookmark
-		if (isNew && bookmark.isPrivatni()) {
+		if (isNew) {// novi bookmark
 
-			bookmark.setVlasnik(korisnikService.findAuthenticatedKorisnik());
+			if (bookmark.getId() != null) {
+				throw new Exception(MessageFormat.format("Ne postoji bookmark sa jedinstvenim identifikatorom: {0}", bookmark.getId()));
+			}
+
+			//postavi trenutno prijavljenog korisnika za novi privatni bookmark
+			if (bookmark.isPrivatni()) {
+				bookmark.setVlasnik(korisnikService.findAuthenticatedKorisnik());
+			}
 
 		}
 
@@ -94,7 +101,7 @@ public class BookmarkService {
 
 		//ne može se brisati nepostojeći bookmark
 		if (isNew) {
-			throw new Exception("Ne može se brisati nepostojeći bookmark");
+			throw new Exception(MessageFormat.format("Ne postoji bookmark sa jedinstvenim identifikatorom: {0}", bookmark.getId()));
 		}
 
 		Bookmark existingBookmark = findById(bookmark.getId()).get();
