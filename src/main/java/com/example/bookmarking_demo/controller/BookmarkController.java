@@ -14,6 +14,9 @@ import com.example.bookmarking_demo.model.Bookmark;
 import com.example.bookmarking_demo.service.BookmarkService;
 import com.example.bookmarking_demo.service.KorisnikService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 @RestController
 @RequestMapping(value = "/api")
 public class BookmarkController {
@@ -25,6 +28,7 @@ public class BookmarkController {
 	KorisnikService korisnikService;
 
 	@GetMapping(value = "/bookmark-javni")
+	@ApiOperation(value = "Pregled javnih bookmark-ova")
 	public List<Bookmark> getJavni() {
 		List<Bookmark> bookmarkList = bookmarkService.findJavni();
 
@@ -32,6 +36,7 @@ public class BookmarkController {
 	}
 
 	@GetMapping(value = "/bookmark-privatni")
+	@ApiOperation(value = "Pregled privatnih bookmark-ova")
 	public List<Bookmark> getPrivatni() {
 		List<Bookmark> bookmarkList = bookmarkService.findPrivatniForVlasnik(
 				korisnikService.findAuthenticatedKorisnik());
@@ -40,12 +45,14 @@ public class BookmarkController {
 	}
 
 	@PostMapping(value = "/bookmark")
-	public void save(@RequestBody Bookmark bookmark) throws Exception {
+	@ApiOperation(value = "Kreiranje / ažuriranje bookmark-a. Za ažuriranje je potrebno navesti jedinstveni identifikator.")
+	public void save(@ApiParam(value = "Bookmark koji se kreira / ažurira", required = true, name = "Bookmark") @RequestBody Bookmark bookmark) throws Exception {
 		bookmarkService.save(bookmark);
 	}
 
 	@DeleteMapping(value = "/bookmark")
-	public void delete(@RequestBody Bookmark bookmark) throws Exception {
+	@ApiOperation(value = "Brisanje bookmark-a. Za brisanje je potrebno navesti jedinstveni identifikator")
+	public void delete(@ApiParam(value = "Bookmark koji se briše", required = true, name = "Korisnik") @RequestBody Bookmark bookmark) throws Exception {
 		bookmarkService.delete(bookmark);
 	}
 

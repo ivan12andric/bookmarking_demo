@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.bookmarking_demo.model.Korisnik;
 import com.example.bookmarking_demo.service.KorisnikService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 @RestController
 @RequestMapping(value = "/api")
 public class KorisnikController {
@@ -20,6 +23,7 @@ public class KorisnikController {
 	KorisnikService korisnikService;
 
 	@GetMapping(value = "/korisnici")
+	@ApiOperation(value = "Pregled korisnika")
 	public List<Korisnik> getAll() {
 		List<Korisnik> korisnikList = korisnikService.findAll();
 
@@ -27,7 +31,8 @@ public class KorisnikController {
 	}
 
 	@PostMapping(value = "/korisnik")
-	public void save(@RequestBody Korisnik korisnik) throws Exception {
+	@ApiOperation(value = "Kreiranje / ažuriranje korisnika")
+	public void save(@ApiParam(value = "Korisnik koji se kreira / ažurira", required = true, name = "Korisnik") @RequestBody Korisnik korisnik) throws Exception {
 		korisnikService.save(korisnik);
 	}
 

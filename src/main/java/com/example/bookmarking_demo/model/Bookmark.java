@@ -21,6 +21,8 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,6 +35,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
+@ApiModel(description = "Bookmark - link na web stranicu")
 public class Bookmark implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -41,19 +44,24 @@ public class Bookmark implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	@EqualsAndHashCode.Include
+	@ApiModelProperty(notes = "Jedinistveni identifikator bookmarka", position = 1)
 	private Long id;
 
 	@Basic(optional = false)
+	@ApiModelProperty(notes = "Naziv bookmarka", position = 2)
 	private String naziv;
 
 	@Basic(optional = false)
+	@ApiModelProperty(notes = "Url bookmarka - link", position = 3)
 	private String url;
 
 	@Basic(optional = false)
+	@ApiModelProperty(notes = "Vrsta bookmarka - JAVNI ili PRIVATNI", position = 4)
 	private String vrsta;
 
 	@ManyToOne
 	@JoinColumn(name = "KORISNIK_ID")
+	@ApiModelProperty(notes = "Vlasnik bookmarka", position = 5)
 	private Korisnik vlasnik;
 
 	@JsonIgnore
