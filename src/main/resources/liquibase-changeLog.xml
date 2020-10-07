@@ -27,11 +27,35 @@
 		<addAutoIncrement tableName="korisnik"
 			columnName="id" columnDataType="int" />
 	</changeSet>
-	
+
 	<changeSet id="3" author="auto">
-		<addUniqueConstraint columnNames="korisnicko_ime" tableName="korisnik" />
+		<addUniqueConstraint columnNames="korisnicko_ime"
+			tableName="korisnik" />
 	</changeSet>
 
+
+	<changeSet id="4" author="auto">
+		<createTable tableName="bookmark">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="naziv" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="url" type="varchar(1000)">
+				<constraints nullable="false" />
+			</column>
+			<column name="vrsta" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="korisnik_id" type="int">
+				<constraints foreignKeyName="bookmark_korisnik_fk"
+					referencedTableName="korisnik" referencedColumnNames="id" />
+			</column>
+			<column name="aktivan" type="boolean"
+				defaultValueBoolean="true" />
+		</createTable>
+	</changeSet>
 
 
 </databaseChangeLog>
